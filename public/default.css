@@ -1,0 +1,79 @@
+h1 {
+  margin: 8px 0;
+  padding: 8px;
+}
+
+h1 small {
+  font-size: 0.6em;
+  color: #888;
+}
+
+body {
+   margin:0;
+   font-family:"APPLESDGothicNEO-LIGHT", sans-serif;
+}
+h1, h2 {
+   font-weight:500;
+   font-family:"APPLESDGothicNEO-MEDIUM", sans-serif;
+}
+.title {
+   padding:0.76em 0.35em;
+   margin:0 0 1.15em;
+   color:#fff;
+   background:#2ac1bc;
+}
+.menus:nth-of-type(2n) {
+   background:#fcfcfc;
+}
+.menus {
+   display: flex;
+   padding:0.75em 0.7em;
+   margin:0;
+   align-items:center;
+   transition:0.2s all ease;
+   color:#414141;
+}
+.menus h1 {
+   font-size:3em;
+   color:lightgray;
+   margin:0.25em 0;
+   white-space:nowrap;
+   transition:0.2s all ease;
+}
+.menus h2 {
+   margin:0.25em 0;
+   transition:0.2s all ease;
+}
+.menus section {
+   margin:0 0.7em;
+   padding-left:1.8em;
+}
+.menus .morning {
+   width:8em;
+}
+.menus section ~ section {
+   border-left:1px solid lightgray;
+}
+.menus:hover {
+   padding-left:1.4em;
+}
+.menus:hover,
+.menus:hover h1 {
+   color:#000;
+}
+.today h1,
+.today:hover h1 {
+   color: #2ac1bc;
+}
+
+@media (max-width:720px) {
+   .menus {
+      display: block;
+   }
+   .menus section + section {
+      border-left:0;
+   }
+   .menus:hover {
+      padding-left:0.7em;
+   }
+}
