@@ -57,7 +57,7 @@ $(function() {
 
 
     $('html, body').animate({
-       scrollTop: $(`a[name=${today.format('wo')}]`).offset().top
+       scrollTop: $(`a[name=${today.format('wo')}]`).offset().top - 76
     }, 200);
   });
 });

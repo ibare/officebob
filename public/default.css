@@ -6,6 +6,25 @@ h1, h2 {
    font-weight:500;
    font-family:"APPLESDGothicNEO-MEDIUM", sans-serif;
 }
+header {
+	position:fixed;
+	top:0;
+	left:0;
+	right:0;
+	background:rgba(255,255,255,0.9);
+	padding:0.95em 3em;
+	height:76px;
+	box-shadow: 0 0 1px 0 #000;
+	box-sizing:border-box;
+}
+header h1 {
+	font-size:1.4em;
+	margin:0;
+}
+header img {
+	vertical-align:middle;
+	margin-right:0.8em;
+}
 .title {
    padding:0.76em 0.35em;
    margin:0 0 1.15em;
@@ -69,6 +88,12 @@ h1, h2 {
 @media (max-width:720px) {
 	body {
 		font-size:14px;
+	}
+	.title {
+		margin:0
+	}
+	header {
+		padding:0.95em 1em;
 	}
   h1 {
     font-size: 1.4em;
