@@ -8,7 +8,9 @@
 </head>
 <body>
   <div class="container">
-    <h1><img src="http://www.woowahan.com/wp-content/uploads/2012/01/main_logo.gif" width="50"> 오피스밥 <small>어서오세요!</small></h1>
+		<header>
+			<h1><img src="http://www.woowahan.com/wp-content/uploads/2012/01/main_logo.gif" width="50"> 오피스밥 <small>어서오세요!</small></h1>
+		</header>
     <div id="menu"></div>
   </div>
   <script id="menus-template" type="text/x-handlebars-template">
@@ -18,7 +20,7 @@
       <h1 class="title">{{weekHeader}}</h1>
       {{/if}}
       <section class="menus{{#if isToday}} today{{/if}}">
-         <h1>{{dayName}}</h1>
+         <h1>{{dayName}}<time>{{date}}</time></h1>
          <section class="morning">
             <h2>아침</h2>
             <p>{{{morningTitle}}}</p>
