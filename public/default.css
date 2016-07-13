@@ -66,14 +66,22 @@ h1, h2 {
    color: #2ac1bc;
 }
 
+.lunch strong {
+  font-size: 120%;
+  color: #2ac1bc;
+}
+
 @media (max-width:720px) {
-   .menus {
-      display: block;
-   }
-   .menus section + section {
-      border-left:0;
-   }
-   .menus:hover {
-      padding-left:0.7em;
-   }
+  h1 {
+    font-size: 1.4em;
+  }
+  .menus {
+    display: block;
+  }
+  .menus section + section {
+    border-left:0;
+  }
+  .menus:hover {
+    padding-left:0.7em;
+  }
 }

@@ -23,6 +23,8 @@ $(function() {
       var date = moment(menu['gsx$date'].$t.replace(/\./g, '-').slice(0,10));
       var isWeekHeader = +date.format('d') == 1;
       var weekHeader = '';
+      var lunchMainMenu = (menu.gsx$lunch.$t || '').split(',')[0];
+      var lunchSideMenu = (menu.gsx$lunch.$t || '').split(',').splice(1).join(',');
 
       if (isWeekHeader) {
         if (month === date.format('MM')) {
@@ -39,8 +41,9 @@ $(function() {
         menus.push({
           date: date.format('YYYY-MM-DD'),
           isMorning: !!menu.gsx$breakfast.$t,
-          morningTitle: menu.gsx$breakfast.$t || '없음',
-          lunchTitle: menu.gsx$lunch.$t || '없음',
+          morningTitle: menu.gsx$breakfast.$t || '&nbsp;',
+          lunchMainMenu: lunchMainMenu,
+          lunchSideMenu: lunchSideMenu,
           isWeekHeader: isWeekHeader,
           weekHeader: weekHeader,
           weekOfYear: date.format('wo'),
