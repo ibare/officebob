@@ -1,4 +1,4 @@
-const URL = 'https://spreadsheets.google.com/feeds/list/1GqW4dY5DSUZ4Qkg7NnbKBrQnaw9goNooarjb1IgqYac/od6/public/values?alt=json';
+const BobSheet = 'https://spreadsheets.google.com/feeds/list/1GqW4dY5DSUZ4Qkg7NnbKBrQnaw9goNooarjb1IgqYac/od6/public/values?alt=json';
 const dayNames = {
   'Monday': '월요일',
   'Tuesday': '화요일',
@@ -9,11 +9,12 @@ const dayNames = {
 
 const today = moment();
 
+
 $(function() {
   var source   = $("#menus-template").html();
   var template = Handlebars.compile(source);
 
-  $.getJSON(URL, function (json) {
+  $.getJSON(BobSheet, function (json) {
     var menus = [];
     var month = '';
     var weekCount = 0;
@@ -50,6 +51,7 @@ $(function() {
     });
 
     $('#menu').html(template({ menus: menus }));
+
 
     $('html, body').animate({
        scrollTop: $(`a[name=${today.format('wo')}]`).offset().top
