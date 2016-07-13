@@ -40,6 +40,7 @@ $(function() {
       if (date.isValid()) {
         menus.push({
           date: date.format('YYYY-MM-DD'),
+          shortDate: date.format('MM월 D일'),
           isMorning: !!menu.gsx$breakfast.$t,
           morningTitle: menu.gsx$breakfast.$t || '&nbsp;',
           lunchMainMenu: lunchMainMenu,
