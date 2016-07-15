@@ -1,0 +1,226 @@
+<!doctype html>
+<html>
+<head>
+  <title>오피스밥</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <style>
+    body {
+       margin:0;
+       font-family:"APPLESDGothicNEO-LIGHT", sans-serif;
+    }
+    h1, h2 {
+       font-weight:500;
+       font-family:"APPLESDGothicNEO-MEDIUM", sans-serif;
+    }
+    header {
+    	position:fixed;
+    	top:0;
+    	left:0;
+    	right:0;
+    	background:rgba(255,255,255,0.9);
+    	padding:0.95em 3em;
+    	height:76px;
+    	box-shadow: 0 0 1px 0 #000;
+    	box-sizing:border-box;
+    }
+    header h1 {
+    	font-size:1.4em;
+    	margin:0;
+    }
+    header img {
+    	vertical-align:middle;
+    	margin-right:0.8em;
+    }
+    .title {
+       padding:0.76em 0.35em;
+       margin:0 0 1.15em;
+       color:#fff;
+       background:#2ac1bc;
+    }
+    .menus:nth-of-type(2n) {
+       background:#fcfcfc;
+    }
+    .menus {
+       display: flex;
+       padding:0.75em 0.7em;
+       margin:0;
+       align-items:center;
+       transition:0.2s all ease;
+       color:#414141;
+    }
+    .menus h1 {
+       font-size:3em;
+       color:lightgray;
+       margin:0.25em 0;
+       white-space:nowrap;
+       transition:0.2s all ease;
+    }
+    .menus h1 time {
+    	display:block;
+    	font-size:0.35em;
+      margin-left: 0.2em;
+    }
+    .menus h2 {
+       margin:0.25em 0;
+       transition:0.2s all ease;
+    }
+    .menus section {
+       margin:0 0.7em;
+       padding-left:1.8em;
+    }
+    .menus .morning {
+       width:8em;
+    }
+    .menus section ~ section {
+       border-left:1px solid lightgray;
+    }
+    .menus:hover {
+       padding-left:1.4em;
+    }
+    .menus:hover,
+    .menus:hover h1 {
+       color:#000;
+    }
+    .today h1,
+    .today:hover h1 {
+       color: #2ac1bc;
+    }
+
+    .lunch strong {
+    	font-weight:500;
+    	font-size:1.1em;
+      color: #2ac1bc;
+    }
+
+    @media (max-width:720px) {
+    	body {
+    		font-size:14px;
+    	}
+    	.title {
+    		margin:0
+    	}
+    	header {
+    		padding:0.95em 1em;
+    	}
+      h1 {
+        font-size: 1.4em;
+      }
+      .menus {
+        display: block;
+    		padding: 0.3em 1.1em;
+      }
+    	.menus h1 {
+    		font-size:2.2em;
+    	}
+    	.menus h2,
+    	.menus p {
+    		margin:0.2em 0;
+    	}
+    	.menus section {
+    		padding-left:0.7em;
+    	}
+      .menus section + section {
+        border-left:0;
+      }
+      .menus:hover {
+        padding-left:0.7em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+		<header>
+			<h1><img src="http://www.woowahan.com/wp-content/uploads/2012/01/main_logo.gif" width="50"> 오피스밥 <small>어서오세요!</small></h1>
+		</header>
+    <div id="menu"></div>
+  </div>
+  <script id="menus-template" type="text/x-handlebars-template">
+    {{#each menus}}
+      {{#if isWeekHeader}}
+      <a name="{{weekOfYear}}"></a>
+      <h1 class="title">{{weekHeader}}</h1>
+      {{/if}}
+      <section class="menus{{#if isToday}} today{{/if}}">
+         <h1>{{dayName}}<time>{{shortDate}}</time></h1>
+         <section class="morning">
+            <h2>아침</h2>
+            <p>{{{morningTitle}}}</p>
+         </section>
+         <section class="lunch">
+            <h2>점심</h2>
+            <p><strong>{{lunchMainMenu}}</strong> {{lunchSideMenu}}</p>
+         </section>
+      </section>
+    {{/each}}
+  </script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/1.2.1/jquery-migrate.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      var BobSheet = 'https://spreadsheets.google.com/feeds/list/1GqW4dY5DSUZ4Qkg7NnbKBrQnaw9goNooarjb1IgqYac/od6/public/values?alt=json';
+      var dayNames = {
+        'Monday': '월요일',
+        'Tuesday': '화요일',
+        'Wednesday': '수요일',
+        'Thursday': '목요일',
+        'Friday': '금요일'
+      };
+
+      var today = moment();
+      var source   = $("#menus-template").html();
+      var template = Handlebars.compile(source);
+
+      $.getJSON(BobSheet, function (json) {
+        var menus = [];
+        var month = '';
+        var weekCount = 0;
+
+        json.feed.entry.forEach(function(menu) {
+          var date = moment(menu['gsx$date'].$t.replace(/\./g, '-').slice(0,10));
+          var isWeekHeader = +date.format('d') == 1;
+          var weekHeader = '';
+          var lunchMainMenu = (menu.gsx$lunch.$t || '').split(',')[0];
+          var lunchSideMenu = (menu.gsx$lunch.$t || '').split(',').splice(1).join(',');
+
+          if (isWeekHeader) {
+            if (month === date.format('MM')) {
+              weekCount++;
+            } else {
+              month = date.format('MM');
+              weekCount = 1;
+            }
+
+            weekHeader = `${date.format('YYYY년 M월')} ${weekCount}주차 우아한 키친`;
+          }
+
+          if (date.isValid()) {
+            menus.push({
+              date: date.format('YYYY-MM-DD'),
+              shortDate: date.format('MM월 D일'),
+              isMorning: !!menu.gsx$breakfast.$t,
+              morningTitle: menu.gsx$breakfast.$t || '&nbsp;',
+              lunchMainMenu: lunchMainMenu,
+              lunchSideMenu: lunchSideMenu,
+              isWeekHeader: isWeekHeader,
+              weekHeader: weekHeader,
+              weekOfYear: date.format('wo'),
+              isToday: date.format('YYYY-MM-DD') == today.format('YYYY-MM-DD'),
+              dayName: dayNames[date.format('dddd')]
+            });
+          }
+        });
+
+        $('#menu').html(template({ menus: menus }));
+
+        $('html, body').animate({
+           scrollTop: $(`a[name=${today.format('wo')}]`).offset().top - 76
+        }, 200);
+      });
+    });
+  </script>
+</body>
+</html>
