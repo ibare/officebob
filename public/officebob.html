@@ -156,6 +156,7 @@
     {{/each}}
   </script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/1.2.1/jquery-migrate.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
@@ -179,7 +180,8 @@
         var month = '';
         var weekCount = 0;
 
-        json.feed.entry.forEach(function(menu) {
+        for (var i=0; i<json.feed.entry.length; i++) {
+          var menu = json.feed.entry[i]
           var date = moment(menu['gsx$date'].$t.replace(/\./g, '-').slice(0,10));
           var isWeekHeader = +date.format('d') == 1;
           var weekHeader = '';
@@ -212,7 +214,7 @@
               dayName: dayNames[date.format('dddd')]
             });
           }
-        });
+        }
 
         $('#menu').html(template({ menus: menus }));
 
