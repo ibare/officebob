@@ -194,7 +194,7 @@
               weekCount = 1;
             }
 
-            weekHeader = `${date.format('YYYY년 M월')} ${weekCount}주차 우아한 키친`;
+            weekHeader = date.format('YYYY년 M월') + weekCount + '주차 우아한 키친';
           }
 
           if (date.isValid()) {
@@ -217,7 +217,7 @@
         $('#menu').html(template({ menus: menus }));
 
         $('html, body').animate({
-           scrollTop: $(`a[name=${today.format('wo')}]`).offset().top - 76
+           scrollTop: $('a[name='+today.format('wo')).offset().top - 76
         }, 200);
       });
     });
