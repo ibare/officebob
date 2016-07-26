@@ -26,6 +26,10 @@ $(function() {
       var lunchMainMenu = (menu.gsx$lunch.$t || '').split(',')[0];
       var lunchSideMenu = (menu.gsx$lunch.$t || '').split(',').splice(1).join(',');
 
+			if(lunchSideMenu !== "") {
+				lunchSideMenu = "," + lunchSideMenu;
+			}
+
       if (isWeekHeader) {
         if (month === date.format('MM')) {
           weekCount++;
